@@ -11,6 +11,7 @@ public class ProxyUtils {
 
     /**
      * 读取文件
+     *
      * @param file
      * @return
      * @throws Exception
@@ -25,6 +26,7 @@ public class ProxyUtils {
 
     /**
      * 反射获得 指定对象(当前-》父类-》父类...)中的 成员属性
+     *
      * @param instance
      * @param name
      * @return
@@ -46,12 +48,13 @@ public class ProxyUtils {
                 clazz = clazz.getSuperclass();
             }
         }
-        throw new NoSuchFieldException("Field " + name + " not found in " + instance.getClass());
+        throw new NoSuchFieldException(android.os.Build.VERSION.SDK_INT + ",Field " + name + " not found in " + instance.getClass());
     }
 
 
     /**
      * 反射获得 指定对象(当前-》父类-》父类...)中的 函数
+     *
      * @param instance
      * @param name
      * @param parameterTypes
@@ -73,7 +76,7 @@ public class ProxyUtils {
                 clazz = clazz.getSuperclass();
             }
         }
-        throw new NoSuchMethodException("Method " + name + " with parameters " + Arrays.asList
+        throw new NoSuchMethodException(android.os.Build.VERSION.SDK_INT + ",Method " + name + " with parameters " + Arrays.asList
                 (parameterTypes) + " not found in " + instance.getClass());
     }
 }

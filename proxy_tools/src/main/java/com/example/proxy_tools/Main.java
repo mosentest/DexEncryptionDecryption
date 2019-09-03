@@ -70,7 +70,7 @@ public class Main {
      * 2.加密APK中所有的dex文件
      */
     public static void encryptApkAllDex() throws Exception {
-        File apkFile = new File("app/build/outputs/apk/debug/sadfasdfas.apk");
+        File apkFile = new File("app/build/outputs/apk/debug/app-debug.apk");
         File apkTemp = new File("app/build/outputs/apk/debug/temp");
         Zip.unZip(apkFile, apkTemp);
         //只要dex文件拿出来加密
@@ -104,7 +104,7 @@ public class Main {
         File aarTemp = new File("proxy_tools/temp");
         File classesDex = new File(aarTemp, "classes.dex");
         classesDex.renameTo(new File(apkTemp, "classes.dex"));
-        File unSignedApk = new File("app/build/outputs/apk/debug/sadfasdfas-unsigned.apk");
+        File unSignedApk = new File("app/build/outputs/apk/debug/app-debug-unsigned.apk");
         Zip.zip(apkTemp, unSignedApk);
         System.out.println("makeApk--ok");
     }
@@ -113,9 +113,9 @@ public class Main {
      * 4. 对齐
      */
     private static void zipalign() throws IOException, InterruptedException {
-        File unSignedApk = new File("app/build/outputs/apk/debug/sadfasdfas-unsigned.apk");
+        File unSignedApk = new File("app/build/outputs/apk/debug/app-debug-unsigned.apk");
         // zipalign -v -p 4 my-app-unsigned.apk my-app-unsigned-aligned.apk
-        File alignedApk = new File("app/build/outputs/apk/debug/sadfasdfas-unsigned-aligned.apk");
+        File alignedApk = new File("app/build/outputs/apk/debug/app-debug-unsigned-aligned.apk");
 
         //window
 //        Process process = Runtime.getRuntime().exec("cmd /c zipalign -v -p  4 " + unSignedApk.getAbsolutePath()
@@ -139,9 +139,9 @@ public class Main {
     public static void jksToApk() throws IOException, InterruptedException {
         // apksigner sign --ks my-release-key.jks --out my-app-release.apk my-app-unsigned-aligned.apk
         //apksigner sign  --ks jks文件地址 --ks-key-alias 别名 --ks-pass pass:jsk密码 --key-pass pass:别名密码 --out  out.apk in.apk
-        File signedApk = new File("app/build/outputs/apk/debug/sadfasdfas-signed-aligned.apk");
+        File signedApk = new File("app/build/outputs/apk/debug/app-debug-signed-aligned.apk");
         File jks = new File("proxy_tools/dexjks.jks");
-        File alignedApk = new File("app/build/outputs/apk/debug/sadfasdfas-unsigned-aligned.apk");
+        File alignedApk = new File("app/build/outputs/apk/debug/app-debug-unsigned-aligned.apk");
         //apksigner sign --ks D:\Downloads\android_space\DexDEApplication\proxy_tools\dexjks.jks --ks-key-alias yangkun --ks-pass pass:123123 --key-pass pass:123123 --out D:\Downloads\android_space\DexDEApplication\app\build\outputs\apk\debug\app-signed-aligned.apk D:\Downloads\android_space\DexDEApplication\app\build\outputs\apk\debug\app-unsigned-aligned.apk
         //apksigner sign --ks my-release-key.jks --out my-app-release.apk my-app-unsigned-aligned.apk
 
