@@ -1,4 +1,4 @@
-package com.example.proxy_core;
+package com.ku.cn;
 
 import android.app.Application;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -16,16 +15,29 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class ProxyApplication extends Application {
+public class CApplication extends Application {
+
+
+    static String d = "1.1d1e1x1";//.dex
+    static String dd = "1c1l1as1s1e1s.1d1e1x1";//classes.dex
+    static String ddd = "1a1p1p"; //app
+    static String dddd = "1d1e1xD1i1r1"; //dexDir
+
+    static {
+        d = d.replace("1", "");
+        dd = dd.replace("1", "");
+        ddd = ddd.replace("1", "");
+        dddd = dddd.replace("1", "");
+    }
 
     //定义好解密后的文件的存放路径
     private String app_name;
-    private String app_version;
 
-    private String TAG = this.getClass().getSimpleName();
+//    private String app_version;
+
+//    private String TAG = this.getClass().getSimpleName();
 
     /**
      * ActivityThread创建Application之后调用的第一个方法
@@ -43,9 +55,9 @@ public class ProxyApplication extends Application {
         File apkFile = new File(getApplicationInfo().sourceDir);
 
         //把apk解压   app_name+"_"+app_version目录中的内容需要boot权限才能用
-        File versionDir = getDir("yangkun", Context.MODE_PRIVATE);
-        File appDir = new File(versionDir, "app");
-        File dexDir = new File(appDir, "dexDir");
+        File versionDir = getDir(base.getPackageName(), Context.MODE_PRIVATE);
+        File appDir = new File(versionDir, ddd);
+        File dexDir = new File(appDir, dddd);
 
         //得到我们需要加载的Dex文件
         List<File> dexFiles = new ArrayList<>();
@@ -57,7 +69,7 @@ public class ProxyApplication extends Application {
             File[] files = appDir.listFiles();
             for (File file : files) {
                 String name = file.getName();
-                if (name.endsWith(".dex") && !TextUtils.equals(name, "classes.dex")) {
+                if (name.endsWith(d) && !TextUtils.equals(name, dd)) {
                     try {
                         //读取文件内容
                         byte[] bytes = ProxyUtils.getBytes(file);
@@ -91,27 +103,40 @@ public class ProxyApplication extends Application {
 
     }
 
+
+    static String p = "2p2a2th2L2i2s2t2";//pathList
+    static String p1 = "2d2e2x2El2e2m2e2n2t2s";//dexElements
+    static String p2 = "2m2a2k2eP2a2t2h2E2le2m2e2n2t2s";//makePathElements
+    static String p3 = "2m2a2ke2D2e2xE2l2e2m2e2n2ts2";//makeDexElements
+
+    static {
+        p = p.replace("2", "");
+        p1 = p1.replace("2", "");
+        p2 = p2.replace("2", "");
+        p3 = p3.replace("2", "");
+    }
+
     private void loadDex(List<File> dexFiles, File versionDir) throws Exception {
         //1.获取pathlist
-        Field pathListField = ProxyUtils.findField(getClassLoader(), "pathList");
+        Field pathListField = ProxyUtils.findField(getClassLoader(), p);
         Object pathList = pathListField.get(getClassLoader());
         //2.获取数组dexElements
-        Field dexElementsField = ProxyUtils.findField(pathList, "dexElements");
+        Field dexElementsField = ProxyUtils.findField(pathList, p1);
         Object[] dexElements = (Object[]) dexElementsField.get(pathList);
         //3.反射到初始化dexElements的方法
         Method makeDexElements = null;
         Object[] addElements = null;
         ArrayList<IOException> suppressedExceptions = new ArrayList<IOException>();
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            makeDexElements = ProxyUtils.findMethod(pathList, "makePathElements", List.class, File.class, List.class);
+            makeDexElements = ProxyUtils.findMethod(pathList, p2, List.class, File.class, List.class);
             addElements = (Object[]) makeDexElements.invoke(pathList, dexFiles, versionDir, suppressedExceptions);
         } else if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             //DexPathList.java
             Method[] declaredMethods = pathList.getClass().getDeclaredMethods();
             for (Method declaredMethod : declaredMethods) {
                 Class<?>[] parameterTypes = declaredMethod.getParameterTypes();
-                Log.i("mm", "declaredMethod name is:" + declaredMethod.getName() + ",parameterTypes:" + Arrays.toString(parameterTypes));
-                if ("makeDexElements".equals(declaredMethod.getName())) {
+                //Log.i("mm", "declaredMethod name is:" + declaredMethod.getName() + ",parameterTypes:" + Arrays.toString(parameterTypes));
+                if (p3.equals(declaredMethod.getName())) {
                     if (!declaredMethod.isAccessible()) {
                         declaredMethod.setAccessible(true);
                     }
@@ -126,8 +151,8 @@ public class ProxyApplication extends Application {
             Method[] declaredMethods = pathList.getClass().getDeclaredMethods();
             for (Method declaredMethod : declaredMethods) {
                 Class<?>[] parameterTypes = declaredMethod.getParameterTypes();
-                Log.i("mm", "declaredMethod name is:" + declaredMethod.getName() + ",parameterTypes:" + Arrays.toString(parameterTypes));
-                if ("makeDexElements".equals(declaredMethod.getName())) {
+                //Log.i("mm", "declaredMethod name is:" + declaredMethod.getName() + ",parameterTypes:" + Arrays.toString(parameterTypes));
+                if (p3.equals(declaredMethod.getName())) {
                     if (!declaredMethod.isAccessible()) {
                         declaredMethod.setAccessible(true);
                     }
@@ -158,9 +183,9 @@ public class ProxyApplication extends Application {
                 if (metaData.containsKey("app_name")) {
                     app_name = metaData.getString("app_name");
                 }
-                if (metaData.containsKey("app_version")) {
-                    app_version = metaData.getString("app_version");
-                }
+//                if (metaData.containsKey("app_version")) {
+//                    app_version = metaData.getString("app_version");
+//                }
             }
 
         } catch (Exception e) {

@@ -1,4 +1,4 @@
-package com.example.proxy_core;
+package com.ku.proxy_tools;
 
 import java.io.File;
 import java.io.FileInputStream;

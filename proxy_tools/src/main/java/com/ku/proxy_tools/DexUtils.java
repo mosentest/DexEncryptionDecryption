@@ -1,4 +1,4 @@
-package com.example.proxy_tools;
+package com.ku.proxy_tools;
 
 import java.io.File;
 import java.io.RandomAccessFile;

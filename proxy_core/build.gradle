@@ -4,7 +4,6 @@ android {
     compileSdkVersion 28
 
 
-
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 28
@@ -16,9 +15,15 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled true // 混淆
+            zipAlignEnabled true // Zipalign优化
+            proguardFiles 'proguard-rules.pro'  // 加载默认混淆配置文件
+        }
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true // 混淆
+            zipAlignEnabled true // Zipalign优化
+            proguardFiles 'proguard-rules.pro'  // 加载默认混淆配置文件
         }
     }
 

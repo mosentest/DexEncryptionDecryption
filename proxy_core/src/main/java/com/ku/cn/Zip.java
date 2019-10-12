@@ -1,4 +1,4 @@
-package com.example.proxy_tools;
+package com.ku.cn;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -78,15 +78,15 @@ public class Zip {
      * @throws Exception
      */
     public static void zip(File dir, File zip) throws Exception {
-        zip.delete();
-        // 对输出文件做CRC32校验
-        CheckedOutputStream cos = new CheckedOutputStream(new FileOutputStream(
-                zip), new CRC32());
-        ZipOutputStream zos = new ZipOutputStream(cos);
-        //压缩
-        compress(dir, zos, "");
-        zos.flush();
-        zos.close();
+//        zip.delete();
+//        // 对输出文件做CRC32校验
+//        CheckedOutputStream cos = new CheckedOutputStream(new FileOutputStream(
+//                zip), new CRC32());
+//        ZipOutputStream zos = new ZipOutputStream(cos);
+//        //压缩
+//        compress(dir, zos, "");
+//        zos.flush();
+//        zos.close();
     }
 
     /**
@@ -98,45 +98,45 @@ public class Zip {
      */
     private static void compress(File srcFile, ZipOutputStream zos,
                                  String basePath) throws Exception {
-        if (srcFile.isDirectory()) {
-            File[] files = srcFile.listFiles();
-            for (File file : files) {
-                // zip 递归添加目录中的文件
-                compress(file, zos, basePath + srcFile.getName() + "/");
-            }
-        } else {
-            compressFile(srcFile, zos, basePath);
-        }
+//        if (srcFile.isDirectory()) {
+//            File[] files = srcFile.listFiles();
+//            for (File file : files) {
+//                // zip 递归添加目录中的文件
+//                compress(file, zos, basePath + srcFile.getName() + "/");
+//            }
+//        } else {
+//            compressFile(srcFile, zos, basePath);
+//        }
     }
 
     private static void compressFile(File file, ZipOutputStream zos, String dir)
             throws Exception {
-        // temp/lib/x86/libdn_ssl.so
-        String fullName = dir + file.getName();
-        // 需要去掉temp
-        String[] fileNames = fullName.split("/");
-        //正确的文件目录名 (去掉了temp)
-        StringBuffer sb = new StringBuffer();
-        if (fileNames.length > 1){
-            for (int i = 1;i<fileNames.length;++i){
-                sb.append("/");
-                sb.append(fileNames[i]);
-            }
-        }else{
-            sb.append("/");
-        }
-        //添加一个zip条目
-        ZipEntry entry = new ZipEntry(sb.substring(1));
-        zos.putNextEntry(entry);
-        //读取条目输出到zip中
-        FileInputStream fis = new FileInputStream(file);
-        int len;
-        byte data[] = new byte[2048];
-        while ((len = fis.read(data, 0, 2048)) != -1) {
-            zos.write(data, 0, len);
-        }
-        fis.close();
-        zos.closeEntry();
+//        // temp/lib/x86/libdn_ssl.so
+//        String fullName = dir + file.getName();
+//        // 需要去掉temp
+//        String[] fileNames = fullName.split("/");
+//        //正确的文件目录名 (去掉了temp)
+//        StringBuffer sb = new StringBuffer();
+//        if (fileNames.length > 1){
+//            for (int i = 1;i<fileNames.length;++i){
+//                sb.append("/");
+//                sb.append(fileNames[i]);
+//            }
+//        }else{
+//            sb.append("/");
+//        }
+//        //添加一个zip条目
+//        ZipEntry entry = new ZipEntry(sb.substring(1));
+//        zos.putNextEntry(entry);
+//        //读取条目输出到zip中
+//        FileInputStream fis = new FileInputStream(file);
+//        int len;
+//        byte data[] = new byte[2048];
+//        while ((len = fis.read(data, 0, 2048)) != -1) {
+//            zos.write(data, 0, len);
+//        }
+//        fis.close();
+//        zos.closeEntry();
     }
 
 }

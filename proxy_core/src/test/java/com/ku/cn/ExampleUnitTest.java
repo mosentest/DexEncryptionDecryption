@@ -1,4 +1,4 @@
-package com.example.proxy_core;
+package com.ku.cn;
 
 import org.junit.Test;
 
