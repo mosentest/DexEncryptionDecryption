@@ -1,12 +1,9 @@
-package com.ku.cn;
+package com.la.cn;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.Enumeration;
-import java.util.zip.CRC32;
-import java.util.zip.CheckedOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;

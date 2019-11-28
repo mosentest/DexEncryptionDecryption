@@ -1,4 +1,4 @@
-package com.ku.cn;
+package com.la.cn;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

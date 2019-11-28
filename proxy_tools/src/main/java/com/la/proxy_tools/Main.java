@@ -1,4 +1,4 @@
-package com.ku.proxy_tools;
+package com.la.proxy_tools;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -49,7 +49,7 @@ public class Main {
      * 1.制作只包含解密代码的dex文件
      */
     public static void makeDecodeDex() throws IOException, InterruptedException {
-        File aarFile = new File("proxy_core/build/outputs/aar/proxy_core-debug.aar");
+        File aarFile = new File("proxy_core/build/outputs/aar/proxy_core.aar");
         File aarTemp = new File("proxy_tools/temp");
         Zip.unZip(aarFile, aarTemp);
         File classesJar = new File(aarTemp, "classes.jar");
@@ -147,7 +147,7 @@ public class Main {
         // apksigner sign --ks my-release-key.jks --out my-app-release.apk my-app-unsigned-aligned.apk
         //apksigner sign  --ks jks文件地址 --ks-key-alias 别名 --ks-pass pass:jsk密码 --key-pass pass:别名密码 --out  out.apk in.apk
         File signedApk = new File("app/build/outputs/apk/debug/app-debug-signed-aligned.apk");
-        File jks = new File("proxy_tools/a123456.jks");
+        File jks = new File("proxy_tools/s20191127.jks");
         File alignedApk = new File("app/build/outputs/apk/debug/app-debug-unsigned-aligned.apk");
         //apksigner sign --ks D:\Downloads\android_space\DexDEApplication\proxy_tools\dexjks.jks --ks-key-alias yangkun --ks-pass pass:123123 --key-pass pass:123123 --out D:\Downloads\android_space\DexDEApplication\app\build\outputs\apk\debug\app-signed-aligned.apk D:\Downloads\android_space\DexDEApplication\app\build\outputs\apk\debug\app-unsigned-aligned.apk
         //apksigner sign --ks my-release-key.jks --out my-app-release.apk my-app-unsigned-aligned.apk
@@ -156,7 +156,7 @@ public class Main {
 //        Process process = Runtime.getRuntime().exec("cmd /c  apksigner sign --ks " + jks.getAbsolutePath()
         //mac
         String cmd = "/Users/ziqimo/Library/Android/sdk/build-tools/27.0.3/apksigner sign --ks " + jks.getAbsolutePath()
-                + " --ks-key-alias a123456.jks --ks-pass pass:a123456.jks --key-pass pass:a123456.jks --out "
+                + " --ks-key-alias s20191127.jks --ks-pass pass:s20191127.jks --key-pass pass:s20191127.jks --out "
                 + signedApk.getAbsolutePath() + " " + alignedApk.getAbsolutePath();
         Process process = Runtime.getRuntime().exec(new String[]{"/bin/sh", "-c", cmd});
         process.waitFor();

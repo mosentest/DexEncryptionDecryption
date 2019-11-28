@@ -1,4 +1,4 @@
-package com.ku.cn;
+package com.la.cn;
 
 import android.app.Application;
 import android.content.Context;
@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CApplication extends Application {
+public class BApp extends Application {
 
 
     static String d = "1.1d1e1x1";//.dex
