@@ -1,4 +1,4 @@
-package com.la.cn;
+package com.la.fly;
 
 import org.junit.Test;
 
